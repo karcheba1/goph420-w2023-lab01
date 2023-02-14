@@ -4,4 +4,6 @@
 *Instructor:* B. Karchewski  
 *Author:* B. Karchewski
 
+*Author:* Z. Gilchrist
+
 An example repository setup for a simple Python package.
