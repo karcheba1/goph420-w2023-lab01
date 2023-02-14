@@ -2,8 +2,7 @@
 
 *Semester:* W2023  
 *Instructor:* B. Karchewski  
-*Authors:* B. Karchewski
-
-*Author:* Z. Gilchrist
+*Authors:*  B. Karchewski,
+            Z. Gilchrist,
 
 An example repository setup for a simple Python package.
