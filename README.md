@@ -5,5 +5,6 @@
 *Authors:*  B. Karchewski,
             Z. Gilchrist,
             M. de Barros,
+			E. Hill,
 
 An example repository setup for a simple Python package.
