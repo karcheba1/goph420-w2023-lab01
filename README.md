@@ -6,5 +6,6 @@
             Z. Gilchrist,
             M. de Barros,
 			E. Hill,
+            Esther  Obot,
 
 An example repository setup for a simple Python package.
