@@ -6,4 +6,6 @@
 
 *Author:* Z. Gilchrist
 
+*Author:* M. de Barros
+
 An example repository setup for a simple Python package.
