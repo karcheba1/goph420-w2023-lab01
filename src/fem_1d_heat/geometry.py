@@ -50,3 +50,17 @@ def gradient_matrix(s, dz):
         The gradient matrix
     """
     return np.array([[-1, 1]]) / dz
+
+
+# TODO: Implement the Point() class to store depth coordinates
+class Point:
+    
+    def get_z(self):
+        return self._z
+    
+    def set_z(self, value):
+        value = float(value)
+        self._z = value
+
+
+
