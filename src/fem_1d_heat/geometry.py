@@ -57,30 +57,26 @@ class Point:
 
     Parameters
     ----------
-    
     z : float
         depth value
-
-    -------
-    
     """
     def __init__(self, z=0.0):
         self.z = z
     
     @property
     def z(self):
-       
-       """ Gets the depth of the Point object
-        Parameters
-        ----------
-        value : float
+       """Gets the depth of the Point object
+
+       Parameters
+       ----------
+       value : float
             Sets the depth of the element
-        
-        Returns
-        -------
-        z : float
+       
+       Returns
+       -------
+       z : float
             Gets the depth of the element
-        """
+       """
         return self._z
     
     @z.setter
