@@ -88,11 +88,11 @@ class Point:
 class Node(Point):
 
     def __init__(self, z=0.0, temp=0.0):
-        pass
+        self.temp = temp
 
     @property
     def temp(self):
-        pass
+        return self._temp
 
     @temp.setter(self, value):
         pass
