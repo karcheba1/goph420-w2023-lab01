@@ -77,7 +77,7 @@ class Point:
        z : float
             Gets the depth of the element
        """
-        return self._z
+       return self._z
     
     @z.setter
     def z(self, value):
