@@ -86,7 +86,7 @@ class Point:
 
 
 class Node(Point):
-
+    
     def __init__(self, z=0.0, temp=0.0):
         pass
 
@@ -94,5 +94,7 @@ class Node(Point):
     def temp(self):
         pass
 
-    @temp.setter(self, value):
-        pass
+    @temp.setter
+    def temp(self, value):
+        value = float(value)
+        self._temp = value
