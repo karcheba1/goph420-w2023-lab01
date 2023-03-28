@@ -86,7 +86,15 @@ class Point:
 
 
 class Node(Point):
-    
+    """ Store the temperature at coordinate z.
+
+    Parameters
+    ----------
+    z : float
+        depth value
+    temp : float
+        temperature value
+    """
     def __init__(self, z=0.0, temp=0.0):
         self.temp = temp
         self.z = z
