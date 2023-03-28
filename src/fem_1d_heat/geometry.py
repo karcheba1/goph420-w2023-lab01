@@ -86,6 +86,7 @@ class Point:
 
 
 class Node(Point):
+
     
     def __init__(self, z=0.0, temp=0.0):
         self.temp = temp
@@ -93,7 +94,27 @@ class Node(Point):
 
     @property
     def temp(self):
+        """The temperature of the Node 
+
+        Parameters
+        ----------
+        value : float
+            The temperature to be assigned to the Node
+                
+        Returns
+        -------
+        temp : float
+            The temperature of the Node
+
+        Raises
+        ------
+        ValueError
+            If the input value is not convertible to a float
+        """
         return self._temp
+    
+
+  
 
     @temp.setter
     def temp(self, value):
