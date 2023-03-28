@@ -85,4 +85,14 @@ class Point:
         self._z = value
 
 
+class Node(Point):
 
+    def __init__(self, z=0.0, temp=0.0):
+        pass
+
+    @property
+    def temp(self):
+        pass
+
+    @temp.setter(self, value):
+        pass
