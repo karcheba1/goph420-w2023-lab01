@@ -3,7 +3,12 @@ import unittest
 import numpy as np
 
 from fem_1d_heat.geometry import (
+<<<<<<< HEAD
         global_to_local, gradient_matrix
+=======
+        global_to_local,
+        shape_matrix
+>>>>>>> 7add635c1d93ef9911ee0732fc53e6d4e883b37b
 )
 
 
@@ -23,6 +28,20 @@ class TestGlobalToLocalValues(unittest.TestCase):
         with self.assertRaises(TypeError):
             global_to_local('two', self.z_e)
 
+class TestShapeMatrix(unittest.TestCase):
+
+    def setUp(self):
+        self.s = 0.5
+        
+    def test_valid_float_input(self):
+        x_exp = np.array([[0.5, 0.5]])
+        x_act = shape_matrix(self.s)
+        self.assertIsInstance(x_act,np.ndarray)
+        self.assertTrue(np.allclose(x_exp,x_act))
+    
+    def test_invalid_str_input(self):
+        with self.assertRaises(TypeError):
+            shape_matrix('half')
 
 class TestGradientMatrix(unittest.TestCase):
     """This class is setup for the linear case such that the s parameter is unused and such we feed a placeholder value of zero into it."""
