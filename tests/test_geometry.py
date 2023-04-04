@@ -3,12 +3,9 @@ import unittest
 import numpy as np
 
 from fem_1d_heat.geometry import (
-<<<<<<< HEAD
-        global_to_local, gradient_matrix
-=======
         global_to_local,
-        shape_matrix
->>>>>>> 7add635c1d93ef9911ee0732fc53e6d4e883b37b
+        gradient_matrix,
+        shape_matrix,
 )
 
 
