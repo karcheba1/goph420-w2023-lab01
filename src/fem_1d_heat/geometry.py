@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def global_to_local(z, z_e):
     """Converts global coordinate to local (element) coordinate.
 
@@ -60,25 +61,26 @@ class Point:
     z : float
         depth value
     """
+
     def __init__(self, z=0.0):
         self.z = z
-    
+
     @property
     def z(self):
-       """Gets the depth of the Point object
+        """Gets the depth of the Point object
 
-       Parameters
-       ----------
-       value : float
-            Sets the depth of the element
-       
-       Returns
-       -------
-       z : float
-            Gets the depth of the element
-       """
-       return self._z
-    
+        Parameters
+        ----------
+        value : float
+             Sets the depth of the element
+
+        Returns
+        -------
+        z : float
+             Gets the depth of the element
+        """
+        return self._z
+
     @z.setter
     def z(self, value):
         value = float(value)
@@ -95,6 +97,7 @@ class Node(Point):
     temp : float
         temperature value
     """
+
     def __init__(self, z=0.0, temp=0.0):
         self.temp = temp
         self.z = z
@@ -107,7 +110,7 @@ class Node(Point):
         ----------
         value : float
             The temperature to be assigned to the Node
-                
+
         Returns
         -------
         temp : float
@@ -119,11 +122,34 @@ class Node(Point):
             If the input value is not convertible to a float
         """
         return self._temp
-    
-
-  
 
     @temp.setter
     def temp(self, value):
         value = float(value)
         self._temp = value
+
+
+class Element:
+    """Stores a set of Nodes and material property information.
+    """
+
+    def __init__(self):
+        pass
+
+    @property
+    def nodes(self):
+        """Returns a tuple of Node objects contained in the element.
+        """
+        pass
+
+    @property
+    def dz(self):
+        pass
+
+    @property
+    def thm_cond(self):
+        pass
+
+    @thm_cond.setter
+    def thm_cond(self, value):
+        pass
