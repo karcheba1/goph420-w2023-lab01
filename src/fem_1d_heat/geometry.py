@@ -131,20 +131,37 @@ class Node(Point):
 
 class Element:
     """Stores a set of Nodes and material property information.
+        
+        Parameters
+        ----------
+        nodes : tuple
+            Node objects with length 2
+
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, nodes):
+        nodes = tuple(nodes)
+        if len(nodes) != 2:
+            raise ValueError(f"len of nodes {len(nodes)} is not equal to 2")
+        for nd in nodes:
+            if not isinstance(nd, Node):
+                raise TypeError(f"nodes contains {type(nd)} which is not a Node")
+        self._nodes = nodes
 
     @property
     def nodes(self):
         """Returns a tuple of Node objects contained in the element.
+        
+        Returns
+        -------
+        nodes : tuple
+            Node objects with length 2
         """
-        pass
+        return self._nodes
 
     @property
     def dz(self):
-        pass
+        return abs(self.nodes[1].z - self.nodes[0].z)
 
     @property
     def thm_cond(self):
