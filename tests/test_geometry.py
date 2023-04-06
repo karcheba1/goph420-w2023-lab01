@@ -74,8 +74,12 @@ class TestElement(unittest.TestCase):
     def test_correct_shape(self):
         pass
     
-    def test_invalid_str_input(self):
+    def test_invalid_float_input(self):
+        with self.assertRaises(ValueError):
+            element = Element(nodes, -5, 5)
+        
         pass
+
     
 
 if __name__ == "__main__":
