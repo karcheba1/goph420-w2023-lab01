@@ -61,6 +61,23 @@ class TestGradientMatrix(unittest.TestCase):
         with self.assertRaises(TypeError):
             gradient_matrix(0, 'five')
 
+class TestElement(unittest.TestCase):
+
+    def setUp(self):
+        self.nodes = 0
+        self.thm_cond = 69
+        self.vol_heat_cap = 420
+
+    def test_valid_float_input(self):
+        pass
+
+    def test_correct_shape(self):
+        pass
+    
+    def test_invalid_str_input(self):
+        pass
+    
+
 if __name__ == "__main__":
     unittest.main()
 
