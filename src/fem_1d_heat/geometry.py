@@ -139,7 +139,7 @@ class Element:
 
     """
 
-    def __init__(self, nodes):
+    def __init__(self, nodes, thm_cond=0.0, vol_heat_cap=0.0):
         nodes = tuple(nodes)
         if len(nodes) != 2:
             raise ValueError(f"len of nodes {len(nodes)} is not equal to 2")
@@ -147,6 +147,8 @@ class Element:
             if not isinstance(nd, Node):
                 raise TypeError(f"nodes contains {type(nd)} which is not a Node")
         self._nodes = nodes
+        self.thm_cond = thm_cond
+        self.vol_heat_cap = vol_heat_cap
 
     @property
     def nodes(self):
@@ -165,8 +167,56 @@ class Element:
 
     @property
     def thm_cond(self):
-        pass
+        """Heat conductivity of the element.
+
+        Parameters
+        ----------
+        value : float
+            The heat conductivity to be assigned to the element
+
+        Returns
+        -------
+        thm_cond : float
+            The heat conductivity of the element
+
+        Raises
+        ------
+        ValueError
+            If the input value is less than 0.0
+        """
+        return self._thm_cond
 
     @thm_cond.setter
     def thm_cond(self, value):
-        pass
+        value = float(value)
+        if value < 0.0:
+            raise ValueError(f"{value} < 0.0 is not valid")
+        self._thm_cond = value
+
+    @property
+    def vol_heat_cap(self):
+        """Volumetric heat capacity of the element.
+
+        Parameters
+        ----------
+        value : float
+            The Volumetric heat capacity to be assigned to the element
+
+        Returns
+        -------
+        thm_cond : float
+            The Volumetric heat capacity of the element
+
+        Raises
+        ------
+        ValueError
+            If the input value is less than 0.0
+        """
+        return self._vol_heat_cap
+
+    @vol_heat_cap.setter
+    def vol_heat_cap(self, value):
+        value = float(value)
+        if value < 0.0:
+            raise ValueError(f"{value} < 0.0 is not valid")
+        self._vol_heat_cap = value
