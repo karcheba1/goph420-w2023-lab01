@@ -8,14 +8,26 @@ def global_to_local(z, z_e):
     ----------
     z : float
         The global coordinate to convert to local coordinate
-    z_e : array_like, shape = (2,)
-        Nodal coordinates of the element
+    z_e : array_like, shape = (2, ), dtype=float_like
+        Nodal coordinates of the element,
+        will be flattened prior to checking shape
 
     Returns
     -------
     float
         The local coordinate
+
+    Raises
+    ------
+    ValueError
+        If z is not convertible to float
+        If z_e values are not convertible to float
+        If len(z_e) is not 2
     """
+    z = float(z)
+    z_e = np.array(z_e, dtype=float).flatten()
+    if len(z_e) != 2:
+        raise ValueError(f"z_e contains {len(z_e)} entries, should be 2")
     return (z - z_e[0]) / (z_e[1] - z_e[0])
 
 
@@ -31,7 +43,16 @@ def shape_matrix(s):
     -------
     numpy.ndarray, shape = (1, 2)
         The shape function matrix
+
+    Raises
+    ------
+    ValueError
+        If s is not convertible to float
+        If s is not between 0.0 and 1.0
     """
+    s = float(s)
+    if s < 0.0 or s > 1.0:
+        raise ValueError(f"s == {s} is not between 0.0 and 1.0")
     return np.array([[(1 - s), s]])
 
 
@@ -49,17 +70,31 @@ def gradient_matrix(s, dz):
     -------
     numpy.ndarray, shape = (1, 2)
         The gradient matrix
+
+    Raises
+    ------
+    ValueError
+        If s is not convertible to float
+        If s is not between 0.0 and 1.0
+        If dz is not convertible to float
+        If dz is negative
     """
-    return np.array([[-1, 1]]) / dz
+    s = float(s)
+    if s < 0.0 or s > 1.0:
+        raise ValueError(f"s == {s} is not between 0.0 and 1.0")
+    dz = float(dz)
+    if dz < 0.0:
+        raise ValueError(f"dz == {dz} is negative")
+    return np.array([[-1.0, 1.0]]) / dz
 
 
 class Point:
-    """ Store the depth as a coordinate.
+    """Stores the depth coordinate of a Point in one dimension
 
     Parameters
     ----------
-    z : float
-        depth value
+    z : float, optional, default=0.0
+        Depth of the Point
     """
 
     def __init__(self, z=0.0):
@@ -67,17 +102,22 @@ class Point:
 
     @property
     def z(self):
-        """Gets the depth of the Point object
+        """The depth of the Point
 
         Parameters
         ----------
         value : float
-             Sets the depth of the element
+             Value to set the depth of the Point
 
         Returns
         -------
         z : float
-             Gets the depth of the element
+             The depth of the Point
+
+        Raises
+        ------
+        ValueError
+            If the value to be assigned is not convertible to float
         """
         return self._z
 
@@ -92,10 +132,10 @@ class Node(Point):
 
     Parameters
     ----------
-    z : float
-        depth value
-    temp : float
-        temperature value
+    z : float, optional, default=0.0
+        Depth of the Node
+    temp : float, optional, default=0.0
+        Temperature of the Node
     """
 
     def __init__(self, z=0.0, temp=0.0):
@@ -104,7 +144,7 @@ class Node(Point):
 
     @property
     def temp(self):
-        """The temperature of the Node 
+        """The temperature of the Node
 
         Parameters
         ----------
@@ -131,57 +171,78 @@ class Node(Point):
 
 class Element:
     """Stores a set of Nodes and material property information.
-        
-        Parameters
-        ----------
-        nodes : tuple
-            Node objects with length 2
 
+    Parameters
+    ----------
+    nodes : tuple or iterable, len = 2
+        Node objects to be contained in the element,
+        will be converted to tuple
+    thm_cond : float, optional, default=0.0
+        Thermal conductivity of the element
+    vol_heat_cap : float, optional, default=0.0
+        Volumetric heat capacity of the element
+
+    Raises
+    ------
+    TypeError
+        If nodes is not iterable (i.e. convertible to tuple)
+        If nodes contains any non-Node objects
+    ValueError
+        If len(nodes) != 2
     """
 
     def __init__(self, nodes, thm_cond=0.0, vol_heat_cap=0.0):
         nodes = tuple(nodes)
         if len(nodes) != 2:
-            raise ValueError(f"len of nodes {len(nodes)} is not equal to 2")
+            raise ValueError(f"len(nodes) = {len(nodes)} is not equal to 2")
         for nd in nodes:
             if not isinstance(nd, Node):
-                raise TypeError(f"nodes contains {type(nd)} which is not a Node")
+                raise TypeError(
+                    f"nodes contains {type(nd)} which is not a Node")
         self._nodes = nodes
         self.thm_cond = thm_cond
         self.vol_heat_cap = vol_heat_cap
 
     @property
     def nodes(self):
-        """Returns a tuple of Node objects contained in the element.
-        
+        """Node objects contained in the element.
+
         Returns
         -------
-        nodes : tuple
-            Node objects with length 2
+        nodes : tuple, len = 2
+            Tuple of Node objects in the element
         """
         return self._nodes
 
     @property
     def dz(self):
-        return abs(self.nodes[1].z - self.nodes[0].z)
+        """Element thickness.
+
+        Returns
+        -------
+        float
+            The thickness or length of the element.
+        """
+        return np.abs(self.nodes[1].z - self.nodes[0].z)
 
     @property
     def thm_cond(self):
-        """Heat conductivity of the element.
+        """Thermal conductivity of the element.
 
         Parameters
         ----------
         value : float
-            The heat conductivity to be assigned to the element
+            The thermal conductivity to be assigned to the element
 
         Returns
         -------
         thm_cond : float
-            The heat conductivity of the element
+            The thermal conductivity of the element
 
         Raises
         ------
         ValueError
+            If the input value is not convertible to a float
             If the input value is less than 0.0
         """
         return self._thm_cond
@@ -200,16 +261,17 @@ class Element:
         Parameters
         ----------
         value : float
-            The Volumetric heat capacity to be assigned to the element
+            The volumetric heat capacity to be assigned to the element
 
         Returns
         -------
         thm_cond : float
-            The Volumetric heat capacity of the element
+            The volumetric heat capacity of the element
 
         Raises
         ------
         ValueError
+            If the input value is not convertible to a float
             If the input value is less than 0.0
         """
         return self._vol_heat_cap
