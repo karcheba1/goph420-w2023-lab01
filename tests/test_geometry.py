@@ -12,7 +12,6 @@ from fem_1d_heat.geometry import (
 
 
 class TestGlobalToLocal(unittest.TestCase):
-
     def setUp(self):
         self.z_e = np.array([0.0, 6.0])
 
@@ -37,7 +36,7 @@ class TestGlobalToLocal(unittest.TestCase):
 
     def test_invalid_str_input_z(self):
         with self.assertRaises(ValueError):
-            global_to_local('two', self.z_e)
+            global_to_local("two", self.z_e)
 
     def test_invalid_str_input_ze(self):
         with self.assertRaises(ValueError):
@@ -49,7 +48,6 @@ class TestGlobalToLocal(unittest.TestCase):
 
 
 class TestShapeMatrix(unittest.TestCase):
-
     def test_valid_input(self):
         x_exp = np.array([[0.2, 0.8]])
         x_act = shape_matrix(0.8)
@@ -58,7 +56,7 @@ class TestShapeMatrix(unittest.TestCase):
 
     def test_invalid_input(self):
         with self.assertRaises(ValueError):
-            shape_matrix('half')
+            shape_matrix("half")
         with self.assertRaises(ValueError):
             shape_matrix(-0.1)
         with self.assertRaises(ValueError):
@@ -74,7 +72,7 @@ class TestGradientMatrix(unittest.TestCase):
         self.dz = 2.0
 
     def test_valid_input(self):
-        exp_result = np.array([-.5, .5])
+        exp_result = np.array([-0.5, 0.5])
         exp_shape = (1, 2)
         act_result = gradient_matrix(self.dummy_s, self.dz)
         self.assertIsInstance(act_result, np.ndarray)
@@ -83,13 +81,13 @@ class TestGradientMatrix(unittest.TestCase):
 
     def test_invalid_input(self):
         with self.assertRaises(ValueError):
-            gradient_matrix('five', self.dz)
+            gradient_matrix("five", self.dz)
         with self.assertRaises(ValueError):
             gradient_matrix(-0.1, self.dz)
         with self.assertRaises(ValueError):
             gradient_matrix(1.1, self.dz)
         with self.assertRaises(ValueError):
-            gradient_matrix(self.dummy_s, 'five')
+            gradient_matrix(self.dummy_s, "five")
         with self.assertRaises(ValueError):
             gradient_matrix(self.dummy_s, -0.5)
 
@@ -105,7 +103,6 @@ class TestNode(unittest.TestCase):
 
 
 class TestElement(unittest.TestCase):
-
     def setUp(self):
         self.nodes = (Node(0.0), Node(1.5))
         self.thm_cond = 6.9e1

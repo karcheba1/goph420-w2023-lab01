@@ -128,7 +128,7 @@ class Point:
 
 
 class Node(Point):
-    """ Store the temperature at coordinate z.
+    """Store the temperature at coordinate z.
 
     Parameters
     ----------
