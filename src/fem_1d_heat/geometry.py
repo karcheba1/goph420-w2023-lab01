@@ -197,8 +197,7 @@ class Element:
             raise ValueError(f"len(nodes) = {len(nodes)} is not equal to 2")
         for nd in nodes:
             if not isinstance(nd, Node):
-                raise TypeError(
-                    f"nodes contains {type(nd)} which is not a Node")
+                raise TypeError(f"nodes contains {type(nd)} which is not a Node")
         self._nodes = nodes
         self.thm_cond = thm_cond
         self.vol_heat_cap = vol_heat_cap
