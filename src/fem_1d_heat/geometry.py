@@ -241,7 +241,7 @@ class Element:
         Returns
         -------
         thm_cond : float
-        
+
             The thermal conductivity of the element
 
         Raises
@@ -295,25 +295,25 @@ class Element:
         -------
         numpy.ndarray,shape(2,2)
             conductivity matrix of the element
-        
         """
         nnod = len(self.nodes)
-        k = np .zeros((nnod,nnod))
-        for s , w in zip (Element._int_pts,Element._int_wts):
-            B= gradient_matrix(s,self.dz)
-            k+= B.T@B*self.dz*self.thm_cond*w
+        k = np .zeros((nnod, nnod))
+        for s, w in zip(Element._int_pts, Element._int_wts):
+            B = gradient_matrix(s, self.dz)
+            k += B.T@B*self.dz*self.thm_cond*w
         return k
-                          
-
 
     def storage_matrix(self):
-        
+        """storage matrix of the element.
+
+        Returns
+        -------
+        numpy.ndarray, shape=(2, 2)
+            storage matrix of the element
+        """
         n_nodes = len(self.nodes)
-
-        K = np.zeros((n_nodes,n_nodes))
-
-        for s,w in zip(Element._int_pts,Element._int_wts):
+        K = np.zeros((n_nodes, n_nodes))
+        for s, w in zip(Element._int_pts, Element._int_wts):
             N = shape_matrix(s)
-            K += N.T@self.vol_heat_cap@N*self.dz*w
-
+            K += N.T@N*self.dz*w*self.vol_heat_cap
         return K
