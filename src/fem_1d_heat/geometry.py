@@ -318,14 +318,14 @@ class Element:
             raise ValueError(f"{value} < 0.0 is not valid")
         self.conductivity_matrix = value
 
-    def storage_matrix(self,_s):
+    def storage_matrix(self):
         
-        n_nodes = len(self._nodes)
+        n_nodes = len(self.nodes)
 
-        K = np.zeros(n_nodes,n_nodes)
+        K = np.zeros((n_nodes,n_nodes))
 
         for s,w in zip(Element._int_pts,Element._int_wts):
             N = shape_matrix(s)
             K += N.T@self.vol_heat_cap@N*self.dz*w
 
-            
+        return K
