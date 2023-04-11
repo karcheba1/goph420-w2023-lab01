@@ -201,8 +201,7 @@ class Element:
             raise ValueError(f"len(nodes) = {len(nodes)} is not equal to 2")
         for nd in nodes:
             if not isinstance(nd, Node):
-                raise TypeError(
-                    f"nodes contains {type(nd)} which is not a Node")
+                raise TypeError(f"nodes contains {type(nd)} which is not a Node")
         self._nodes = nodes
         self.thm_cond = thm_cond
         self.vol_heat_cap = vol_heat_cap
@@ -297,10 +296,10 @@ class Element:
             conductivity matrix of the element
         """
         nnod = len(self.nodes)
-        k = np .zeros((nnod, nnod))
+        k = np.zeros((nnod, nnod))
         for s, w in zip(Element._int_pts, Element._int_wts):
             B = gradient_matrix(s, self.dz)
-            k += B.T@B*self.dz*self.thm_cond*w
+            k += B.T @ B * self.dz * self.thm_cond * w
         return k
 
     def storage_matrix(self):
@@ -315,5 +314,5 @@ class Element:
         K = np.zeros((n_nodes, n_nodes))
         for s, w in zip(Element._int_pts, Element._int_wts):
             N = shape_matrix(s)
-            K += N.T@N*self.dz*w*self.vol_heat_cap
+            K += N.T @ N * self.dz * w * self.vol_heat_cap
         return K
