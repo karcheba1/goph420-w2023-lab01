@@ -241,6 +241,7 @@ class Element:
         Returns
         -------
         thm_cond : float
+        
             The thermal conductivity of the element
 
         Raises
@@ -308,24 +309,17 @@ class Element:
         ValueError
             If the input value is not convertible to a float
             If the input value is less than 0.0
-        """
-        return self.conductivity_matrix
-        pass
-    @conductivity_matrix.setter
-    def conductivity_matrix(self, value):
-        value = float(value)
-        if value < 0.0:
-            raise ValueError(f"{value} < 0.0 is not valid")
-        self.conductivity_matrix = value
+        """      
+        
+        nnod=len(self.nodes)
+        k= np.zeros((nnod,nnod))
+        for  s, w in zip(Element._int_pts, Element._int_wts):
+            B=gradient_matrix(s,self.dz)
+            k+= B.T @ B*self.dz*w*self.thm_cond
+        return k 
+
 
     def storage_matrix(self):
-        
-        n_nodes = len(self.nodes)
+        pass
 
-        K = np.zeros((n_nodes,n_nodes))
 
-        for s,w in zip(Element._int_pts,Element._int_wts):
-            N = shape_matrix(s)
-            K += N.T@self.vol_heat_cap@N*self.dz*w
-
-        return K
