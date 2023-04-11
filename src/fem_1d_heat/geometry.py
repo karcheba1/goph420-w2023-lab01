@@ -191,6 +191,10 @@ class Element:
         If len(nodes) != 2
     """
 
+    # Gauss quadrature points and weights [0, 1] domain
+    _int_pts = np.array([0.21132486540518708, 0.7886751345948129])
+    _int_wts = np.array([0.5, 0.5])
+
     def __init__(self, nodes, thm_cond=0.0, vol_heat_cap=0.0):
         nodes = tuple(nodes)
         if len(nodes) != 2:
