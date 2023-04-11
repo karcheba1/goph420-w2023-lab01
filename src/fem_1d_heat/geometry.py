@@ -288,7 +288,35 @@ class Element:
         self._vol_heat_cap = value
 
     def conductivity_matrix(self):
+        """conductivity matrix of the element.
+
+        Parameters
+        ----------
+        value : float
+                the gradient matix
+        value : float
+                thm_cond
+        value : float
+                dz
+
+        Returns
+        -------
+        conductivity matrix: float
+            conductivity matrix of the element
+        Raises
+        ------
+        ValueError
+            If the input value is not convertible to a float
+            If the input value is less than 0.0
+        """
+        return self.conductivity_matrix
         pass
+    @conductivity_matrix.setter
+    def conductivity_matrix(self, value):
+        value = float(value)
+        if value < 0.0:
+            raise ValueError(f"{value} < 0.0 is not valid")
+        self.conductivity_matrix = value
 
     def storage_matrix(self,_s):
         
