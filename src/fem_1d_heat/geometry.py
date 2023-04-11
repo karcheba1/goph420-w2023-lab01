@@ -291,35 +291,29 @@ class Element:
     def conductivity_matrix(self):
         """conductivity matrix of the element.
 
-        Parameters
-        ----------
-        value : float
-                the gradient matix
-        value : float
-                thm_cond
-        value : float
-                dz
-
         Returns
         -------
-        conductivity matrix: float
+        numpy.ndarray,shape(2,2)
             conductivity matrix of the element
-        Raises
-        ------
-        ValueError
-            If the input value is not convertible to a float
-            If the input value is less than 0.0
-        """      
         
-        nnod=len(self.nodes)
-        k= np.zeros((nnod,nnod))
-        for  s, w in zip(Element._int_pts, Element._int_wts):
-            B=gradient_matrix(s,self.dz)
-            k+= B.T @ B*self.dz*w*self.thm_cond
-        return k 
+        """
+        nnod = len(self.nodes)
+        k = np .zeros((nnod,nnod))
+        for s , w in zip (Element._int_pts,Element._int_wts):
+            B= gradient_matrix(s,self.dz)
+            k+= B.T@B*self.dz*self.thm_cond*w
+        return k
+                          
 
 
     def storage_matrix(self):
-        pass
+        
+        n_nodes = len(self.nodes)
 
+        K = np.zeros((n_nodes,n_nodes))
 
+        for s,w in zip(Element._int_pts,Element._int_wts):
+            N = shape_matrix(s)
+            K += N.T@self.vol_heat_cap@N*self.dz*w
+
+        return K
