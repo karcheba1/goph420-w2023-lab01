@@ -290,5 +290,14 @@ class Element:
     def conductivity_matrix(self):
         pass
 
-    def storage_matrix(self):
-        pass
+    def storage_matrix(self,_s):
+        
+        n_nodes = len(self._nodes)
+
+        K = np.zeros(n_nodes,n_nodes)
+
+        for s,w in zip(Element._int_pts,Element._int_wts):
+            N = shape_matrix(s)
+            K += N.T@self.vol_heat_cap@N*self.dz*w
+
+            
