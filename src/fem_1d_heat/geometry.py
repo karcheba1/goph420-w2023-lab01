@@ -323,13 +323,12 @@ class Element:
             storage matrix of the element
         """
         
-        n_nodes = len((self._nodes))
-
-        K = np.zeros(n_nodes,n_nodes)
+        n_nodes = len(self._nodes)
+        K = np.zeros((n_nodes,n_nodes))
 
         for s,w in zip(Element._int_pts,Element._int_wts):
             N = shape_matrix(s)
-            K += N.T@self.vol_heat_cap@N*self.dz*w
+            K += N.T@N*self.dz*w*self.vol_heat_cap
 
         return K
 
